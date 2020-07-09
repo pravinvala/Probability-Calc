@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProbabilityCalc", "ProbabilityCalc\ProbabilityCalc.csproj", "{CF7916C7-9CF6-431E-A3DB-99255C0DC3C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF7916C7-9CF6-431E-A3DB-99255C0DC3C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF7916C7-9CF6-431E-A3DB-99255C0DC3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF7916C7-9CF6-431E-A3DB-99255C0DC3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF7916C7-9CF6-431E-A3DB-99255C0DC3C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23DD7EF3-2717-42F3-8D58-7CF8379270BD}
+	EndGlobalSection
+EndGlobal
