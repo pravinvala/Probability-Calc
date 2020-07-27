@@ -7,9 +7,17 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace ProbabilityCalc.Common
+namespace ProbabilityCalc.Repository
 {
-    public class CommonVariables
+    public interface ICommonRepository
+    {
+        List<SelectListItem> FunctionList();
+        decimal CalculateData(CalculatorModel CalculateData);
+        void ResultLog(CalculatorModel CalculateData, decimal Result);
+    }
+
+
+    public class CommonRepository:ICommonRepository
     {
         #region function dropdown
         public List<SelectListItem> FunctionList()
@@ -44,10 +52,10 @@ namespace ProbabilityCalc.Common
             {
                 using (StreamWriter w = File.AppendText(LogFilePath + "\\" + "Log.txt"))
                 {
-                    w.WriteLine(DateTime.Now.ToLongDateString() + " " +DateTime.Now.ToLongTimeString()+
-                        "\t\t PB1: " + CalculateData.Probability1+
-                        "\t\t PB2: " + CalculateData.Probability1+
-                        "\t\t Fn: " + CalculateData.Function+
+                    w.WriteLine(DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() +
+                        "\t\t PB1: " + CalculateData.Probability1 +
+                        "\t\t PB2: " + CalculateData.Probability1 +
+                        "\t\t Fn: " + CalculateData.Function +
                         "\t\t RESULT: " + Result);
                 }
             }
@@ -58,6 +66,5 @@ namespace ProbabilityCalc.Common
         }
 
         #endregion
-
     }
 }
