@@ -3,36 +3,37 @@
     ViewData["Title"] = "Calculator";
 }
 
-    <div class="row justify-content-md-center">
-        <div class="col col-lg-12 form-group text-center">
-            <label class="h3 "><b>Basic Probability Calculator</b></label>
-            <hr />
-        </div>
-        <div class="col col-lg-6 form-group">
-            <label for="" class="fw-500">Probability 1</label>
-            @Html.TextBoxFor(m => m.Probability1, new { @class = "form-control  form-control-sm number", @type = "number", @placeholder = "Enter Probabilty 1", @onkeypress = "return isNumberWithDecimalKey(event)" })
-        </div>
-        <div class="col col-lg-6 form-group">
-            <label for="" class="fw-500">Probability 2</label>
-            @Html.TextBoxFor(m => m.Probability2, new { @class = "form-control  form-control-sm number", @type = "number", @placeholder = "Enter Probabilty 200", @onkeypress = "return isNumberWithDecimalKey(event)" })
-        </div>
-        <div class="col col-lg-12 form-group">
-            <label for="" class="fw-500">Function</label>
-            @Html.DropDownListFor(m => m.Function, new SelectList(ViewBag.FunctionList, "Value", "Text"), "Select function", new { @class = "form-control  form-control-sm" })
-        </div>
-        <div class="col col-lg-6 form-group">
-            <label></label>
-            <label class="text-info m" id="lblResult"></label>
-        </div>
-        <div class="col col-lg-6 form-group">
-            <label></label>
-            <button type="button" class="btn btn-primary pull-right" id="btnCalculate">Calculate</button>
-        </div>
+<div class="row justify-content-md-center">
+    <div class="col col-lg-12 form-group text-center">
+        <label class="h3 "><b>Basic Probability Calculator</b></label>
+        <hr />
     </div>
-
+    <div class="col col-lg-6 form-group">
+        <label for="" class="fw-500">Probability 1</label>
+        @Html.TextBoxFor(m => m.Probability1, new { @class = "form-control  form-control-sm number", @type = "number", @placeholder = "Enter Probabilty 1", @onkeypress = "return isNumberWithDecimalKey(event)" })
+    </div>
+    <div class="col col-lg-6 form-group">
+        <label for="" class="fw-500">Probability 2</label>
+        @Html.TextBoxFor(m => m.Probability2, new { @class = "form-control  form-control-sm number", @type = "number", @placeholder = "Enter Probabilty 200", @onkeypress = "return isNumberWithDecimalKey(event)" })
+    </div>
+    <div class="col col-lg-12 form-group">
+        <label for="" class="fw-500">Function</label>
+        @Html.DropDownListFor(m => m.Function, new SelectList(ViewBag.FunctionList, "Value", "Key"), "Select function", new { @class = "form-control  form-control-sm" })
+    </div>
+    <div class="col col-lg-6 form-group">
+        <label></label>
+        <label class="text-info m" id="lblResult"></label>
+    </div>
+    <div class="col col-lg-6 form-group">
+        <label></label>
+        <button type="button" class="btn btn-primary pull-right" id="btnCalculate">Calculate</button>
+    </div>
+</div>
 @section Scripts{
 
     <script>
+
+
         $("#btnCalculate").on("click", function () {
             $("#lblResult").text("");
             if ($("#Probability1").val() < 0 || $("#Probability1").val() > 1) {
@@ -43,7 +44,7 @@
                 alert("Number must be between 0 and 1 for Probability 2");
                 return false;
             }
-            else if ($("#Function").val() == "") {
+            if ($("#Function").val() == "") {
                 alert("Please select function");
                 return false;
             }
@@ -58,7 +59,11 @@
                     type: 'POST',
                     data: calculatorModel,
                     success: function (result) {
-                        $("#lblResult").text("Probability Result: "+result.result);
+                        if (result.isSuccess) {
+                            $("#lblResult").text("Probability Result: "+result.result);
+                        } else {
+                            alert(result.message);
+                        }
                     }
                 });
             }

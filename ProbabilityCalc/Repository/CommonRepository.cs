@@ -2,45 +2,52 @@
 using ProbabilityCalc.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ProbabilityCalc.Repository
 {
     public interface ICommonRepository
     {
-        List<SelectListItem> FunctionList();
-        decimal CalculateData(CalculatorModel CalculateData);
+        ResultClass<decimal> CalculateData(CalculatorModel CalculateData);
         void ResultLog(CalculatorModel CalculateData, decimal Result);
     }
 
 
-    public class CommonRepository:ICommonRepository
+    public class CommonRepository : ICommonRepository
     {
-        #region function dropdown
-        public List<SelectListItem> FunctionList()
-        {
-            return new List<SelectListItem> {
-                new SelectListItem { Text = "Combined With", Value = "Combined_With" },
-                 new SelectListItem { Text = "Either", Value = "Either" }
-            };
-        }
-        #endregion
 
         #region probability calculation
-        public decimal CalculateData(CalculatorModel CalculateData)
+        public ResultClass<decimal> CalculateData(CalculatorModel CalculateData)
         {
-            decimal Result;
-            if (CalculateData.Function == "Combined_With")
-                Result = CalculateData.Probability1 * CalculateData.Probability2;
-
+            ResultClass<decimal> result = new ResultClass<decimal>() { IsSuccess = false };
+            if (CalculateData.Probability1 == 0 || CalculateData.Probability1 < 0 || CalculateData.Probability1 > 1)
+                result.Message = "Probability 1 must have value between 0 to 1";
+            else if (CalculateData.Probability2 == 0 || CalculateData.Probability2 < 0 || CalculateData.Probability2 > 1)
+                result.Message = "Probability 2 must have value between 0 to 1";
+            else if (CalculateData.Function == "")
+                result.Message = "Please select function";
             else
-                Result = (CalculateData.Probability1 + CalculateData.Probability2) - (CalculateData.Probability1 * CalculateData.Probability2);
+            {
+                if (CalculateData.Function == "Combined_With")
+                {
+                    result.Result = CalculateData.Probability1 * CalculateData.Probability2;
+                    result.IsSuccess = true;
+                }
 
-            ResultLog(CalculateData, Result);
-            return Result;
+                else
+                {
+                    result.Result = (CalculateData.Probability1 + CalculateData.Probability2) - (CalculateData.Probability1 * CalculateData.Probability2);
+                    result.IsSuccess = true;
+                }
+            }
+
+            ResultLog(CalculateData, result.Result);
+            return result;
         }
         #endregion
 
